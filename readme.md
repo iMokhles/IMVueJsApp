@@ -25,7 +25,11 @@ $ npm run watch
 $ php artisan serve
 ```
 
+# Routes
 
+<h3 align="center">
+<img src="screenshots/routes.png" alt="Routes Screenshot" />
+</h3>
 
 # TODO
 
