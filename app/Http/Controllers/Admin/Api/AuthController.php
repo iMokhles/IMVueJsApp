@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin\Api;
 
 use App\Helpers\Api\ApiHelper;
+use App\Models\Admin;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -18,7 +21,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:admin_api', ['except' => ['login']]);
+        $this->middleware('auth:'.$this->guardName, ['except' => ['login', 'register', 'refresh']]);
     }
 
     /**
@@ -31,10 +34,35 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
 
         if (! $token = auth($this->guardName)->attempt($credentials)) {
-            return ApiHelper::sendResponse(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
+            return ApiHelper::sendResponse(Response::$statusTexts[Response::HTTP_UNAUTHORIZED], Response::HTTP_UNAUTHORIZED);
         }
 
         return $this->respondWithToken($token);
+    }
+
+    /**
+     * Get a JWT via registering new account.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function register()
+    {
+
+        $validator = $this->registerValidator(request()->all());
+        if ($validator->fails()) {
+            return ApiHelper::sendResponse($validator->messages()->first(), Response::HTTP_BAD_REQUEST);
+        }
+
+        $newUser = Admin::create([
+            'name' => request('name'),
+            'email' => request('email'),
+            'password' => bcrypt(request('password')),
+        ]);
+        if ($newUser) {
+            return ApiHelper::sendResponse("Registered Successfully", Response::HTTP_OK);
+
+        }
+        return ApiHelper::sendResponse(Response::$statusTexts[Response::HTTP_EXPECTATION_FAILED], Response::HTTP_BAD_REQUEST);
     }
 
     /**
@@ -48,6 +76,19 @@ class AuthController extends Controller
     }
 
     /**
+     * Check authenticated User.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function check() {
+        $user = auth($this->guardName)->user();
+        if ($user) {
+            return ApiHelper::sendResponse($user, Response::HTTP_OK);
+        }
+        return ApiHelper::sendResponse(Response::$statusTexts[Response::HTTP_UNAUTHORIZED], Response::HTTP_UNAUTHORIZED);
+    }
+
+    /**
      * Log the user out (Invalidate the token).
      *
      * @return \Illuminate\Http\JsonResponse
@@ -55,7 +96,7 @@ class AuthController extends Controller
     public function logout()
     {
         auth($this->guardName)->logout();
-        return ApiHelper::sendResponse(['message' => 'Successfully logged out'], Response::HTTP_OK);
+        return ApiHelper::sendResponse("Successfully logged out", Response::HTTP_OK);
     }
 
     /**
@@ -80,7 +121,23 @@ class AuthController extends Controller
         return ApiHelper::sendResponse([
             'access_token' => $token,
             'token_type' => 'bearer',
+            'user_info' => auth($this->guardName)->user(),
             'expires_in' => auth($this->guardName)->factory()->getTTL() * 60
         ], Response::HTTP_OK);
+    }
+
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function registerValidator(array $data)
+    {
+        return Validator::make($data, [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:admins',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
     }
 }

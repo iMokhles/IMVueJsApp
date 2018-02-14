@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('{subs?}', function () {
     return view('web.welcome');
-});
+})->where(['subs' => '.*']);

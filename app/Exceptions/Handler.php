@@ -8,6 +8,9 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 
 class Handler extends ExceptionHandler
 {
@@ -54,8 +57,14 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
 
-        if ($exception instanceof MethodNotAllowedHttpException) {
-            return ApiHelper::sendResponse($exception->getMessage(), Response::HTTP_UNAUTHORIZED);
+        if ($exception instanceof TokenExpiredException) {
+            return ApiHelper::sendResponse(['token_expired'], $exception->getCode());
+        } else if ($exception instanceof TokenInvalidException) {
+            return ApiHelper::sendResponse(['token_invalid'], $exception->getCode());
+        } else if ($exception instanceof MethodNotAllowedHttpException) {
+            return ApiHelper::sendResponse(Response::$statusTexts[Response::HTTP_METHOD_NOT_ALLOWED], Response::HTTP_METHOD_NOT_ALLOWED);
+        } else if ($exception instanceof JWTException) {
+            return ApiHelper::sendResponse($exception->getMessage(), $exception->getCode());
         }
 
         return parent::render($request, $exception);
@@ -81,6 +90,9 @@ class Handler extends ExceptionHandler
                 return redirect()->guest(route($login_route));
                 break;
             case 'admin_api':
+                return ApiHelper::sendResponse(Response::$statusTexts[Response::HTTP_UNAUTHORIZED], Response::HTTP_UNAUTHORIZED);
+                break;
+            case 'api':
                 return ApiHelper::sendResponse(Response::$statusTexts[Response::HTTP_UNAUTHORIZED], Response::HTTP_UNAUTHORIZED);
                 break;
             case 'web':

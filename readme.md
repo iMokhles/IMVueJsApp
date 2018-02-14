@@ -29,6 +29,7 @@ $ php artisan serve
 
 # TODO
 
+- [x] Added authentication support
 - [ ] Improve authentication support
 - [ ] Add AdminLte
 - [ ] Add Crud generator for .vue files

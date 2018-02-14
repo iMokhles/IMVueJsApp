@@ -21,8 +21,12 @@ try {
  */
 
 window.axios = require('axios');
-
+window.axios.defaults.config = {
+  baseURL: 'http://127.0.0.1:5239/',
+};
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('admin_auth_token');
+
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that

@@ -2,5 +2,7 @@
     "/admin_assets/js/admin.js": "/admin_assets/js/admin.js",
     "/admin_assets/css/admin.css": "/admin_assets/css/admin.css",
     "/web_assets/css/web.css": "/web_assets/css/web.css",
-    "/web_assets/js/web.js": "/web_assets/js/web.js"
+    "/web_assets/js/web.js": "/web_assets/js/web.js",
+    "/admin_assets/js/admin_bundle.min.js": "/admin_assets/js/admin_bundle.min.js",
+    "/web_assets/js/web_bundle.min.js": "/web_assets/js/web_bundle.min.js"
 }
