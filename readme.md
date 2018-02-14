@@ -1,6 +1,6 @@
 ## IMVueJsApp: Multi Guards/Routes Laravel + VueJs Applications for UI
 
-Laravel 5.6 example with Multiple VueJs apps ( Front-end and Back-end )
+Laravel 5.6 example with Multiple VueJs apps ( Front-end (Web) and Back-end (Admin) ) + JWT Auth
 
 ## Install
 
