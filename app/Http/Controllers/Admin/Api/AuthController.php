@@ -44,7 +44,7 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return ApiHelper::sendResponse(auth($this->guardName)->user(), Response::HTTP_UNAUTHORIZED);
+        return ApiHelper::sendResponse(auth($this->guardName)->user(), Response::HTTP_OK);
     }
 
     /**
@@ -55,7 +55,7 @@ class AuthController extends Controller
     public function logout()
     {
         auth($this->guardName)->logout();
-        return ApiHelper::sendResponse(['message' => 'Successfully logged out'], Response::HTTP_UNAUTHORIZED);
+        return ApiHelper::sendResponse(['message' => 'Successfully logged out'], Response::HTTP_OK);
     }
 
     /**
@@ -81,6 +81,6 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth($this->guardName)->factory()->getTTL() * 60
-        ], Response::HTTP_UNAUTHORIZED);
+        ], Response::HTTP_OK);
     }
 }
