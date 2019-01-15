@@ -18,23 +18,23 @@ const routes = [
     {
         name: 'web_welcome',
         path: '/',
-        component: welcome
+        component: welcome,
     },
     {
         name: 'web_home',
         path: '/home',
         secure: true,
-        component: home
+        component: home,
     },
     {
         name: 'web_login',
         path: '/login',
-        component: login
+        component: login,
     },
     {
         name: 'web_register',
         path: '/register',
-        component: register
+        component: register,
     }
 ];
 
@@ -46,13 +46,16 @@ router.beforeEach((to, from, next) => {
         // If this is the current route and it's secure
         if (to.matched[0].path === route.path && route.secure) {
             // Verify that the user isn't logged in
-            auth.me();
+            // auth.me();
             if (!auth.user.authenticated) {
-                return next('/login');
+                next('/login');
+            } else {
+                next();
             }
         }
     });
     // Proceed as normal
     next();
 });
+
 new Vue(Vue.util.extend({ router }, App)).$mount('#web_app');

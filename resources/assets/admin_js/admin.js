@@ -46,9 +46,11 @@ router.beforeEach((to, from, next) => {
         // If this is the current route and it's secure
         if (to.matched[0].path === route.path && route.secure) {
             // Verify that the user isn't logged in
-            auth.me();
+            // auth.me();
             if (!auth.user.authenticated) {
-                return next('/admin/login');
+                next('/admin/login');
+            } else {
+                next();
             }
         }
     });

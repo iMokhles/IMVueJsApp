@@ -17,7 +17,7 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
                     <!-- Authentication Links -->
-                    <li><a v-if="auth.user.authenticated" class="nav-link" @click.prevent="logout" href="#">Logout</a></li>
+                    <li><a v-if="auth.user.authenticated" class="nav-link" @click="logout" href="#">Logout</a></li>
                     <li><router-link class="nav-link" v-if="!auth.user.authenticated" :to="{name: 'admin_login'}" activeClass="active" exact>Login</router-link></li>
                     <li><router-link class="nav-link" v-if="!auth.user.authenticated" :to="{name: 'admin_register'}" activeClass="active" exact>Register</router-link></li>
                 </ul>
@@ -36,6 +36,7 @@
         },
         methods : {
             logout() {
+                console.log("Logout");
                 auth.logout();
             },
         },

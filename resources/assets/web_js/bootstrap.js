@@ -22,7 +22,7 @@ try {
 
 window.axios = require('axios');
 window.axios.defaults.config = {
-    baseURL: 'http://127.0.0.1:5239/',
+    baseURL: 'http://127.0.0.1:8000/',
 };
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('web_auth_token');

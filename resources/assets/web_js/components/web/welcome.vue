@@ -76,6 +76,7 @@
 <script>
     import auth from '../../web_auth.js';
 
+
     export default {
         data() {
             return {

@@ -3,8 +3,8 @@ import {router} from './web.js';
 
 export default {
     user: {
-        authenticated: false,
-        profile: null
+        authenticated: JSON.parse(localStorage.getItem('web_authenticated')),
+        profile: localStorage.getItem('web_profile')
     },
     me() {
         let token = localStorage.getItem('web_auth_token');
@@ -12,8 +12,8 @@ export default {
             axios.post('/api/auth/me', {
                 token: token
             }).then(response =>  {
-                this.user.authenticated = true;
-                this.user.profile = response.data.result;
+                localStorage.setItem('web_authenticated', true);
+                localStorage.setItem('web_profile', response.data.result);
                 return true;
             }).catch(error => {
                 toastr['error'](error);
@@ -27,8 +27,10 @@ export default {
             axios.post('/api/auth/check', {
                 token: token
             }).then(response =>  {
-                this.user.authenticated = true;
-                this.user.profile = response.data.result;
+
+                localStorage.setItem('web_authenticated', true);
+                localStorage.setItem('web_profile', response.data.result);
+
             }).catch(error => {
                 this.refresh();
             });
@@ -40,8 +42,12 @@ export default {
             axios.post('/api/auth/refresh', {
                 token: token
             }).then(response =>  {
-                this.user.authenticated = true;
-                this.user.profile = response.data.result.user_info;
+
+                localStorage.setItem('web_auth_token', response.data.result.access_token);
+
+                localStorage.setItem('web_authenticated', true);
+                localStorage.setItem('web_profile', response.data.result.user_info);
+
             }).catch(error => {
                 toastr['error'](error);
             });
@@ -74,8 +80,10 @@ export default {
             }
         ).then(response =>  {
             localStorage.setItem('web_auth_token', response.data.result.access_token);
-            this.user.authenticated = true;
-            this.user.profile = response.data.result.user_info;
+
+            localStorage.setItem('web_authenticated', true);
+            localStorage.setItem('web_profile', response.data.result.user_info);
+
             router.push({
                 name: 'web_home'
             });
@@ -86,6 +94,9 @@ export default {
     logout() {
         return axios.post('/api/auth/logout').then(response =>  {
             localStorage.removeItem('web_auth_token');
+            localStorage.setItem('web_authenticated', false);
+            localStorage.setItem('web_profile', null);
+
             axios.defaults.headers.common['Authorization'] = null;
             router.push({
                 name: 'web_welcome'
