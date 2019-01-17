@@ -1,6 +1,6 @@
-## IMVueJsApp: Multi Guards/Routes Laravel + VueJs Applications for UI
+## IMVueJsApp: Multi Guards/Routes Laravel + VueJs Applications with Framework7 for UI
 
-Laravel 5.6 example with Multiple VueJs apps ( Front-end (Web) and Back-end (Admin) ) + JWT Auth
+Laravel 5.6 example with Multiple VueJs apps ( Front-end (Web) and Back-end (Admin) ) + JWT Auth + Framework7 
 
 ## Install
 
@@ -34,8 +34,9 @@ $ php artisan serve
 # TODO
 
 - [x] Added authentication support
-- [ ] Improve authentication support
-- [ ] Add AdminLte
+- [x] Improve authentication support
+- [x] Add Framework7
+- [ ] Clean code
 - [ ] Add Crud generator for .vue files
 
 

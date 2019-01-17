@@ -1,96 +1,80 @@
-<style>
-    html, body {
-        background-color: #fff;
-        color: #636b6f;
-        font-family: 'Raleway', sans-serif;
-        font-weight: 100;
-        height: 100vh;
-        margin: 0;
-    }
 
-    .full-height {
-        height: 100vh;
-    }
-
-    .flex-center {
-        align-items: center;
-        display: flex;
-        justify-content: center;
-    }
-
-    .position-ref {
-        position: relative;
-    }
-
-    .top-right {
-        position: absolute;
-        right: 10px;
-        top: 18px;
-    }
-
-    .content {
-        text-align: center;
-    }
-
-    .title {
-        font-size: 84px;
-    }
-
-    .links > a {
-        color: #636b6f;
-        padding: 0 25px;
-        font-size: 12px;
-        font-weight: 600;
-        letter-spacing: .1rem;
-        text-decoration: none;
-        text-transform: uppercase;
-    }
-
-    .m-b-md {
-        margin-bottom: 30px;
-    }
-</style>
 <template>
-    <div class="flex-center position-ref full-height">
-        <div class="top-right links">
-            <router-link v-if="auth.user.authenticated" :to="{name: 'web_home'}" activeClass="active" exact>Home</router-link>
-            <router-link v-if="!auth.user.authenticated" :to="{name: 'web_login'}" activeClass="active" exact>Login</router-link>
-            <router-link v-if="!auth.user.authenticated" :to="{name: 'web_register'}" activeClass="active" exact>Register</router-link>
-        </div>
-        <div class="content">
-            <div class="title m-b-md">
-                Laravel Web
-            </div>
-
-            <div class="links">
-                <a href="https://laravel.com/docs">Documentation</a>
-                <a href="https://laracasts.com">Laracasts</a>
-                <a href="https://laravel-news.com">News</a>
-                <a href="https://forge.laravel.com">Forge</a>
-                <a href="https://github.com/laravel/laravel">GitHub</a>
-            </div>
-        </div>
-    </div>
+    <f7-app :params="f7params">
+        <!-- ...  -->
+        <f7-statusbar></f7-statusbar>
+        <f7-view main>
+            <f7-page>
+                <f7-navbar>
+                    <f7-nav-left/>
+                    <f7-nav-title>Web</f7-nav-title>
+                    <f7-nav-right/>
+                </f7-navbar>
+                <f7-toolbar tabbar labels :bottom-md="isBottom">
+                    <f7-link tab-link="#tab-1" tab-link-active no-hairline text="Home" icon-ios="material:home" icon-md="material:home"></f7-link>
+                    <f7-link tab-link="#tab-2" no-hairline text="Notifications" icon-ios="material:notifications" icon-md="material:notifications"></f7-link>
+                    <f7-link tab-link="#tab-3" no-hairline text="Settings" icon-ios="f7:settings_fill" icon-md="material:settings"></f7-link>
+                </f7-toolbar>
+                <f7-tabs>
+                    <f7-tab id="tab-1" class="page-content" tab-active>
+                        <f7-block>
+                            <p>Home</p>
+                        </f7-block>
+                    </f7-tab>
+                    <f7-tab id="tab-2" class="page-content">
+                        <f7-block>
+                            <p>Notifications</p>
+                        </f7-block>
+                    </f7-tab>
+                    <f7-tab id="tab-3" class="page-content">
+                        <f7-block>
+                            <p>Settings</p>
+                        </f7-block>
+                    </f7-tab>
+                </f7-tabs>
+            </f7-page>
+        </f7-view>
+    </f7-app>
 </template>
 
 <script>
     import auth from '../../web_auth.js';
-
+    import { f7App, f7Navbar, f7Link, f7NavLeft, f7NavRight, f7NavTitle, f7Statusbar } from 'framework7-vue';
 
     export default {
         data() {
             return {
+                isBottom: true,
+                f7params: {
+                    name: 'IMVueJS Web',
+                    id: 'com.imokhles.impanel.web',
+                    theme: 'ios',
+                    // routes
+                    routes: [
+
+                    ],
+                    // ... other params
+                },
                 auth: auth
             }
         },
+        components: {
+            f7App,
+            f7Statusbar,
+            f7Navbar,
+            f7Link,
+            f7NavLeft,
+            f7NavRight,
+            f7NavTitle
+        },
         methods: {
             signout() {
-                auth.signout()
+                auth.signout();
             }
         },
         mounted: function () {
             this.$nextTick(function () {
-                auth.check()
+                auth.check();
             })
         },
         name: "web_welcome"

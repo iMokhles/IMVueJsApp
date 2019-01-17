@@ -1,8 +1,17 @@
 {
-    "/web_assets/js/web.js": "/web_assets/js/web.js",
     "/admin_assets/js/admin.js": "/admin_assets/js/admin.js",
+    "/js/framework7-vue.min.js": "/js/framework7-vue.min.js",
+    "/js/framework7.min.js": "/js/framework7.min.js",
     "/admin_assets/css/admin.css": "/admin_assets/css/admin.css",
     "/web_assets/css/web.css": "/web_assets/css/web.css",
+    "/web_assets/js/web.js": "/web_assets/js/web.js",
+    "/fonts/Framework7Icons-Regular.eot": "/fonts/Framework7Icons-Regular.eot",
+    "/fonts/Framework7Icons-Regular.woff2": "/fonts/Framework7Icons-Regular.woff2",
+    "/fonts/Framework7Icons-Regular.woff": "/fonts/Framework7Icons-Regular.woff",
+    "/fonts/Framework7Icons-Regular.ttf": "/fonts/Framework7Icons-Regular.ttf",
+    "/css/framework7-icons.css": "/css/framework7-icons.css",
+    "/css/framework7.css": "/css/framework7.css",
+    "/css/framework7.ios.css": "/css/framework7.ios.css",
     "/admin_assets/js/admin_bundle.min.js": "/admin_assets/js/admin_bundle.min.js",
     "/web_assets/js/web_bundle.min.js": "/web_assets/js/web_bundle.min.js"
 }

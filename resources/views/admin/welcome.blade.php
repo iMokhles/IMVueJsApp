@@ -7,7 +7,12 @@
         <meta name="csrf-token" content="{!! csrf_token() !!}">
         <title>{{config('app.name')}}</title>
         <!-- Style -->
+        <link href="{{asset('css/framework7.css')}}?v={{time()}}" rel="stylesheet" type="text/css">
+        <link href="{{asset('css/framework7-icons.css')}}?v={{time()}}" rel="stylesheet" type="text/css">
+        <link href="{{asset('css/framework7.ios.css')}}?v={{time()}}" rel="stylesheet" type="text/css">
         <link href="{{asset('admin_assets/css/admin.css')}}?v={{time()}}" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+              rel="stylesheet">
     </head>
     <body>
         <div id="admin_app">
@@ -17,6 +22,8 @@
                 'csrfToken' => csrf_token(),
             ]); ?>
         </script>
+        <script src="{{asset('js/framework7.min.js')}}"></script>
+        <script src="{{asset('js/framework7-vue.min.js')}}"></script>
         <script src="{{asset('admin_assets/js/admin_bundle.min.js')}}"></script>
     </body>
 </html>

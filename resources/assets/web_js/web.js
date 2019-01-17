@@ -1,3 +1,6 @@
+import Framework7Vue from 'framework7-vue/framework7-vue.esm.bundle.js';
+import Framework7 from 'framework7/framework7.esm.bundle.js';
+
 import Vue from 'vue';
 import App from './App.vue';
 import home from './components/web/home.vue';
@@ -11,6 +14,8 @@ Vue.use(VueRouter);
 import VueAxios from 'vue-axios';
 import axios from 'axios';
 import auth from './web_auth.js';
+
+Framework7.use(Framework7Vue);
 
 Vue.use(VueAxios, axios);
 

@@ -1,3 +1,6 @@
+import Framework7Vue from 'framework7-vue/framework7-vue.esm.bundle.js';
+import Framework7 from 'framework7/framework7.esm.bundle.js';
+
 import Vue from 'vue';
 import App from './App.vue';
 import home from './components/admin/home.vue';
@@ -11,6 +14,9 @@ Vue.use(VueRouter);
 import VueAxios from 'vue-axios';
 import axios from 'axios';
 import auth from './admin_auth.js';
+import i18n from './localization';
+
+Framework7.use(Framework7Vue);
 
 Vue.use(VueAxios, axios);
 
@@ -57,4 +63,4 @@ router.beforeEach((to, from, next) => {
     // Proceed as normal
     next();
 });
-new Vue(Vue.util.extend({ router }, App)).$mount('#admin_app');
+new Vue(Vue.util.extend({ router, i18n }, App)).$mount('#admin_app');
